@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaxiGo — Taxi Booking Service</title>
+<meta name="description" content="TaxiGo - fast, safe and affordable taxi booking service.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#f7c600; --yellow2:#ffd83d; --dark:#111827; --dark2:#1f2937;
+  --muted:#6b7280; --light:#f7f8fa; --white:#fff; --green:#16a34a;
+  --border:#e5e7eb; --shadow:0 18px 50px rgba(17,24,39,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--dark);background:#fff;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+.container{width:min(1160px,92%);margin:auto}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav{height:74px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;font-size:25px;display:flex;align-items:center;gap:9px}
+.logo span{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:var(--yellow);font-size:20px}
+.logo b{color:#111}
+.navlinks{display:flex;gap:28px;align-items:center;font-weight:600;font-size:14px}
+.navlinks a:hover{color:#b08700}
+.btn{border:0;border-radius:12px;padding:13px 20px;font-weight:800;cursor:pointer;transition:.2s}
+.btn-primary{background:var(--yellow);color:#111}
+.btn-primary:hover{background:var(--yellow2);transform:translateY(-1px)}
+.btn-dark{background:var(--dark);color:#fff}
+.btn-outline{background:#fff;border:1px solid var(--border)}
+.menu{display:none;background:none;border:0;font-size:28px}
+.hero{position:relative;background:radial-gradient(ellipse at 5% 10%,rgba(247,198,0,.17),transparent 31%),linear-gradient(120deg,#fffdf4,#f5f6f4 72%,#e9ecec);padding:68px 0 78px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:58px;align-items:center}
+.hero-copy-block{animation:rise-in .7s both}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.8);border:1px solid #e8dfb7;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:800;margin-bottom:21px}
+.badge i{width:8px;height:8px;background:var(--green);border-radius:50%}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(48px,5.7vw,76px);line-height:.99;letter-spacing:-2.5px;margin-bottom:22px}
+h1 span{display:inline-block;color:#bf9200}
+.hero-copy{font-size:17px;color:#626a70;max-width:470px;margin-bottom:28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-art{position:relative;min-height:475px;display:grid;align-items:start;animation:rise-in .8s .12s both}
+.city-card{width:100%;height:455px;border-radius:8px 8px 90px 8px;background-image:linear-gradient(180deg,rgba(10,17,23,.03) 45%,rgba(10,17,23,.52)),url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=85');background-size:cover;background-position:center;position:relative;overflow:hidden;box-shadow:0 26px 65px rgba(17,24,39,.2)}
+.city-card:after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.35);border-radius:inherit;pointer-events:none}
+.scene-label{position:absolute;right:20px;top:20px;color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;text-shadow:0 1px 8px #111}
+.scene-note{position:absolute;left:24px;bottom:24px;color:#fff;font-size:13px;font-weight:700;z-index:1}
+.scene-note strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:27px;line-height:1.2}
+.booking-card{position:absolute;left:-38px;bottom:20px;width:350px;background:#fff;border-radius:8px;padding:21px;box-shadow:0 20px 55px rgba(17,24,39,.22);z-index:4;border-top:3px solid var(--yellow);animation:rise-in .65s .35s both}
+.booking-card h3{margin-bottom:13px;font-size:18px}
+.field{margin-bottom:11px}
+.field label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.input{width:100%;padding:12px 13px;border:1px solid var(--border);border-radius:10px;outline:none;background:#fff}
+.input:focus{border-color:#c6a000;box-shadow:0 0 0 3px rgba(247,198,0,.15)}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+@keyframes rise-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.stats{padding:28px 0;background:#111827;color:#fff}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);text-align:center}
+.stat strong{font-size:27px;display:block}.stat span{color:#cbd5e1;font-size:12px}
+.section{padding:78px 0}
+.section-head{text-align:center;max-width:700px;margin:0 auto 38px}
+.eyebrow{color:#a37e00;font-weight:900;text-transform:uppercase;font-size:12px;letter-spacing:1.4px}
+.section h2{font-size:40px;letter-spacing:-1.3px;margin:7px 0 10px}
+.section-head p{color:var(--muted)}
+.cabs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.cab{border:1px solid var(--border);border-radius:20px;padding:20px;background:#fff;box-shadow:0 7px 30px rgba(0,0,0,.04);transition:.2s}
+.cab:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.cab-img{height:150px;border-radius:14px;background:#f3f4f6;display:grid;place-items:center;font-size:72px;margin-bottom:17px}
+.cab-top{display:flex;justify-content:space-between;gap:12px}.cab h3{font-size:20px}
+.price{font-weight:900}.cab p{color:var(--muted);font-size:13px;margin:6px 0 14px}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:15px}.tag{font-size:11px;background:#f3f4f6;padding:5px 8px;border-radius:7px}
+.services{background:var(--light)}
+.service-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.service{background:#fff;padding:24px;border-radius:17px;border:1px solid var(--border)}
+.icon{width:48px;height:48px;display:grid;place-items:center;background:#fff5bd;border-radius:13px;font-size:24px;margin-bottom:15px}
+.service h3{font-size:17px;margin-bottom:5px}.service p{font-size:13px;color:var(--muted)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{position:relative;padding:28px;border:1px solid var(--border);border-radius:18px}
+.num{width:34px;height:34px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:900;margin-bottom:15px}
+.step p{color:var(--muted);font-size:14px}
+.cta{padding:55px 0}.cta-box{background:var(--dark);color:#fff;border-radius:26px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.cta-box p{color:#cbd5e1;margin-top:7px}.cta-box h2{font-size:34px}
+footer{background:#0b0f15;color:#cbd5e1;padding:45px 0 25px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}
+footer h4{color:#fff;margin-bottom:12px}footer a{display:block;font-size:13px;margin:8px 0;color:#9ca3af}footer p{font-size:13px;color:#9ca3af}
+.copyright{border-top:1px solid #252b33;margin-top:30px;padding-top:18px;font-size:12px;text-align:center;color:#6b7280}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;padding:20px;align-items:center;justify-content:center}
+.modal.show{display:flex}.modal-box{background:#fff;width:min(560px,100%);border-radius:22px;padding:28px;max-height:90vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.close{border:0;background:#f3f4f6;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}
+.summary{background:#fff9dc;padding:15px;border-radius:12px;margin:15px 0;font-size:14px}
+.toast{position:fixed;right:20px;bottom:20px;background:#111827;color:#fff;padding:14px 18px;border-radius:12px;box-shadow:var(--shadow);transform:translateY(120px);transition:.3s;z-index:200;font-size:14px}.toast.show{transform:none}
+@media(max-width:900px){
+ .hero-grid{grid-template-columns:1fr;gap:38px}.hero-art{min-height:420px}.booking-card{left:16px}.city-card{height:410px}
+ .cabs{grid-template-columns:1fr 1fr}.service-grid{grid-template-columns:1fr 1fr}
+ .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+ .navlinks{display:none}.menu{display:block}.navlinks.open{display:flex;position:absolute;left:0;right:0;top:74px;background:#fff;padding:18px 4%;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)}
+ .hero{padding:42px 0 54px}.hero-art{min-height:455px}.booking-card{position:absolute;left:10px;bottom:-5px;width:calc(100% - 20px)}.city-card{height:350px;border-radius:8px 8px 58px 8px}h1{font-size:clamp(46px,12vw,62px);letter-spacing:-1.8px}.hero-copy{font-size:16px}
+ .stats-grid{grid-template-columns:1fr 1fr;gap:20px}.cabs,.how{grid-template-columns:1fr}.service-grid{grid-template-columns:1fr 1fr}
+ .cta-box{padding:30px;flex-direction:column;align-items:flex-start}.footer-grid{grid-template-columns:1fr}
+ .form-grid{grid-template-columns:1fr}.full{grid-column:auto}h1{letter-spacing:-1.7px}
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="container nav">
+  <a class="logo" href="#"><span>🚕</span>TaxiGo</a>
+  <nav class="navlinks" id="navlinks">
+   <a href="#home">Home</a><a href="#cabs">Cabs</a><a href="#services">Services</a><a href="#how">How It Works</a><a href="#contact">Contact</a>
+   <button class="btn btn-primary" onclick="openBooking()">Book a Taxi</button>
+  </nav>
+  <button class="menu" onclick="toggleMenu()">☰</button>
+ </div>
+</header>
+
+<main id="home">
+<section class="hero">
+ <div class="container hero-grid">
+  <div class="hero-copy-block">
+   <div class="badge"><i></i> Available 24/7 in your city</div>
+   <h1>Your city.<br><span>Your ride.</span></h1>
+   <p class="hero-copy">A better way to get there. Book a trusted ride for local trips, airport transfers and journeys beyond the city.</p>
+   <div class="hero-actions">
+    <button class="btn btn-primary" onclick="openBooking()">Book a Taxi <span aria-hidden="true">→</span></button>
+    <a class="btn btn-outline" href="#cabs">Explore the fleet</a>
+   </div>
+  </div>
+  <div class="hero-art">
+   <div class="city-card" role="img" aria-label="Yellow taxis moving through a busy city street"><span class="scene-label">Every street. Every day.</span><div class="scene-note"><strong>Go your own way.</strong>Reliable rides, right on time.</div></div>
+   <div class="booking-card">
+    <h3>Quick Booking</h3>
+    <div class="field"><label>Pickup</label><input id="quickPickup" class="input" placeholder="Enter pickup location"></div>
+    <div class="field"><label>Drop-off</label><input id="quickDrop" class="input" placeholder="Where are you going?"></div>
+    <div class="quick">
+      <button class="btn btn-primary" onclick="useQuickBooking()">Get Fare</button>
+      <button class="btn btn-dark" onclick="openBooking()">Book Now</button>
+    </div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="stats"><div class="container stats-grid">
+ <div class="stat"><strong>50K+</strong><span>Happy Customers</span></div>
+ <div class="stat"><strong>1,200+</strong><span>Driver Partners</span></div>
+ <div class="stat"><strong>24/7</strong><span>Customer Support</span></div>
+ <div class="stat"><strong>4.9/5</strong><span>Average Rating</span></div>
+</div></section>
+
+<section class="section" id="cabs"><div class="container">
+ <div class="section-head"><div class="eyebrow">Choose your ride</div><h2>Comfort for every journey</h2><p>Pick the cab that fits your trip and budget.</p></div>
+ <div class="cabs">
+  <article class="cab"><div class="cab-img">🚗</div><div class="cab-top"><h3>Mini</h3><div class="price">₹12/km</div></div><p>Affordable rides for everyday travel.</p><div class="tags"><span class="tag">4 Seats</span><span class="tag">2 Bags</span><span class="tag">AC</span></div><button class="btn btn-primary" style="width:100%" onclick="selectCab('Mini',12)">Book Mini</button></article>
+  <article class="cab"><div class="cab-img">🚘</div><div class="cab-top"><h3>Sedan</h3><div class="price">₹16/km</div></div><p>Extra comfort for business and family trips.</p><div class="tags"><span class="tag">4 Seats</span><span class="tag">3 Bags</span><span class="tag">AC</span></div><button class="btn btn-primary" style="width:100%" onclick="selectCab('Sedan',16)">Book Sedan</button></article>
+  <article class="cab"><div class="cab-img">🚙</div><div class="cab-top"><h3>SUV</h3><div class="price">₹21/km</div></div><p>Spacious rides for groups and luggage.</p><div class="tags"><span class="tag">6 Seats</span><span class="tag">5 Bags</span><span class="tag">AC</span></div><button class="btn btn-primary" style="width:100%" onclick="selectCab('SUV',21)">Book SUV</button></article>
+ </div>
+</div></section>
+
+<section class="section services" id="services"><div class="container">
+ <div class="section-head"><div class="eyebrow">Our services</div><h2>Everything you need</h2><p>Reliable transportation for every kind of journey.</p></div>
+ <div class="service-grid">
+  <div class="service"><div class="icon">🏙️</div><h3>Local Taxi</h3><p>Quick rides across the city at transparent fares.</p></div>
+  <div class="service"><div class="icon">✈️</div><h3>Airport Transfer</h3><p>On-time pickup and drop-off for stress-free travel.</p></div>
+  <div class="service"><div class="icon">🛣️</div><h3>Outstation</h3><p>Comfortable intercity rides with flexible packages.</p></div>
+  <div class="service"><div class="icon">💼</div><h3>Corporate</h3><p>Professional travel solutions for your business.</p></div>
+ </div>
+</div></section>
+
+<section class="section" id="how"><div class="container">
+ <div class="section-head"><div class="eyebrow">Simple process</div><h2>Book in three easy steps</h2></div>
+ <div class="how">
+  <div class="step"><div class="num">1</div><h3>Enter your trip</h3><p>Tell us where you want to be picked up and dropped off.</p></div>
+  <div class="step"><div class="num">2</div><h3>Choose your cab</h3><p>Compare vehicle types and estimated fares, then select one.</p></div>
+  <div class="step"><div class="num">3</div><h3>Confirm & ride</h3><p>Confirm your booking and get your driver details instantly.</p></div>
+ </div>
+</div></section>
+
+<section class="cta"><div class="container"><div class="cta-box"><div><h2>Ready to hit the road?</h2><p>Book your next ride with TaxiGo today.</p></div><button class="btn btn-primary" onclick="openBooking()">Book Your Taxi →</button></div></div></section>
+</main>
+
+<footer id="contact"><div class="container">
+ <div class="footer-grid">
+  <div><div class="logo" style="color:#fff;margin-bottom:12px"><span>🚕</span>TaxiGo</div><p>Your trusted partner for safe, comfortable and affordable taxi rides.</p></div>
+  <div><h4>Company</h4><a href="#home">About Us</a><a href="#services">Services</a><a href="#how">How It Works</a></div>
+  <div><h4>Support</h4><a href="#">Help Center</a><a href="#">Safety</a><a href="#">Terms & Conditions</a></div>
+  <div><h4>Contact</h4><a href="tel:+919999999999">+91 99999 99999</a><a href="mailto:hello@taxigo.in">hello@taxigo.in</a><a href="#">Nagpur, Maharashtra</a></div>
+ </div>
+ <div class="copyright">© 2026 TaxiGo. All rights reserved.</div>
+</div></footer>
+
+<div class="modal" id="bookingModal">
+ <div class="modal-box">
+  <div class="modal-head"><div><div class="eyebrow">Taxi booking</div><h2>Book your ride</h2></div><button class="close" onclick="closeBooking()">×</button></div>
+  <form id="bookingForm" onsubmit="confirmBooking(event)">
+   <div class="form-grid">
+    <div class="field"><label>Pickup Location *</label><input id="pickup" required class="input" placeholder="e.g. Nagpur Railway Station"></div>
+    <div class="field"><label>Drop Location *</label><input id="drop" required class="input" placeholder="e.g. Airport"></div>
+    <div class="field"><label>Date *</label><input id="date" type="date" required class="input"></div>
+    <div class="field"><label>Time *</label><input id="time" type="time" required class="input"></div>
+    <div class="field"><label>Passengers</label><select id="passengers" class="input"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+    <div class="field"><label>Cab Type</label><select id="cabType" class="input"><option value="Mini|12">Mini — ₹12/km</option><option value="Sedan|16">Sedan — ₹16/km</option><option value="SUV|21">SUV — ₹21/km</option></select></div>
+    <div class="field"><label>Your Name *</label><input id="name" required class="input" placeholder="Full name"></div>
+    <div class="field"><label>Mobile *</label><input id="phone" required pattern="[0-9]{10}" class="input" placeholder="10 digit mobile number"></div>
+    <div class="field full"><label>Estimated Distance (km)</label><input id="distance" type="number" min="1" value="8" class="input" oninput="updateFare()"></div>
+   </div>
+   <div class="summary" id="fareSummary"><b>Estimated fare:</b> ₹96</div>
+   <button class="btn btn-primary" style="width:100%" type="submit">Confirm Booking</button>
+  </form>
+ </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+let selectedCab = {name:"Mini", rate:12};
+
+function toggleMenu(){ $("navlinks").classList.toggle("open"); }
+function showToast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200);}
+function openBooking(){
+  $("bookingModal").classList.add("show");
+  const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset());
+  $("date").value=d.toISOString().slice(0,10);
+  $("time").value=new Date(Date.now()+30*60000).toTimeString().slice(0,5);
+  updateFare();
+}
+function closeBooking(){$("bookingModal").classList.remove("show")}
+function selectCab(name,rate){
+ selectedCab={name,rate};
+ $("cabType").value=name+"|"+rate;
+ openBooking();
+}
+function useQuickBooking(){
+ $("pickup").value=$("quickPickup").value;
+ $("drop").value=$("quickDrop").value;
+ openBooking();
+}
+function updateFare(){
+ const [name,rate]=($("cabType")?.value||"Mini|12").split("|");
+ const km=Math.max(1,Number($("distance")?.value||8));
+ const base={Mini:80,Sedan:110,SUV:150}[name]||80;
+ const fare=Math.round(base+km*Number(rate));
+ if($("fareSummary")) $("fareSummary").innerHTML="<b>Estimated fare:</b> ₹"+fare+" <span style='color:#6b7280'>("+name+" · "+km+" km)</span>";
+}
+$("cabType").addEventListener("change",updateFare);
+function confirmBooking(e){
+ e.preventDefault();
+ const [cab,rate]=$("cabType").value.split("|");
+ const km=Number($("distance").value);
+ const fare=Math.round(({Mini:80,Sedan:110,SUV:150}[cab]||80)+km*Number(rate));
+ const booking={
+   id:"TG"+Date.now().toString().slice(-7),name:$("name").value,phone:$("phone").value,
+   pickup:$("pickup").value,drop:$("drop").value,date:$("date").value,time:$("time").value,
+   passengers:$("passengers").value,cab,distance:km,fare,status:"Confirmed"
+ };
+ const bookings=JSON.parse(localStorage.getItem("taxigo_bookings")||"[]");
+ bookings.push(booking); localStorage.setItem("taxigo_bookings",JSON.stringify(bookings));
+ closeBooking();
+ $("bookingForm").reset();
+ showToast("Booking "+booking.id+" confirmed! Estimated fare ₹"+fare);
+ alert("Booking Confirmed!\n\nBooking ID: "+booking.id+"\nCab: "+cab+"\nPickup: "+booking.pickup+"\nDrop: "+booking.drop+"\nEstimated Fare: ₹"+fare);
+}
+window.addEventListener("click",e=>{if(e.target===$("bookingModal"))closeBooking()});
+</script>
+</body>
+</html>
